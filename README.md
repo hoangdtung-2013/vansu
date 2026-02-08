@@ -1,31 +1,37 @@
 # vncalendar
 ========= Tiếng Việt =========
 
-I. Import thư viện
+## I. Import thư viện
+
 from main import Date, VanSu
 
 ---
 
-II. Sử dụng lớp Date
+## II. Sử dụng lớp Date
 
-1. Kiểm tra năm nhuận (dương lịch) 
+1. Kiểm tra năm nhuận (dương lịch)
+
    Date.isLeap(2024) -> True
 
-2. Số ngày trong tháng (dương lịch)
+3. Số ngày trong tháng (dương lịch)
+
    Date.dayMonth(2, 2024) -> 29
 
-3. Thứ trong tuần (theo Dương lịch)  
+5. Thứ trong tuần (theo Dương lịch)
+   
    Date.dayWeek(8, 2, 2026) -> 'Chủ nhật'
 
-4. Cộng và trừ ngày (dương lịch)
+7. Cộng và trừ ngày (dương lịch)
+   
    Date.addDays(8, 2, 2026, 10) -> (18, 2, 2026)  
    Date.subtDays(8, 2, 2026, 5) -> (3, 2, 2026)
 
 ---
 
-III. Chuyển đổi Âm – Dương lịch (SolarAndLunar)
+## III. Chuyển đổi Âm – Dương lịch (SolarAndLunar)
 
-1. Dương lịch sang Âm lịch  
+1. Dương lịch sang Âm lịch
+    
    VanSu.SolarAndLunar.convertSolar2Lunar(8, 2, 2026)  
    -> (21, 12, 2025, 0)
 
@@ -35,7 +41,8 @@ III. Chuyển đổi Âm – Dương lịch (SolarAndLunar)
    - 2025: năm âm
    - 0: không phải tháng nhuận (1 là tháng nhuận)
 
-2. Âm lịch sang Dương lịch  
+3. Âm lịch sang Dương lịch
+   
    VanSu.SolarAndLunar.convertLunar2Solar(1, 1, 2026, 0)  
    -> (17, 2, 2026)
 
@@ -45,20 +52,23 @@ III. Chuyển đổi Âm – Dương lịch (SolarAndLunar)
 
 ---
 
-IV. Can Chi (CanChi)
+## IV. Can Chi (CanChi)
 
-1. Can Chi năm âm lịch  
+1. Can Chi năm âm lịch
+   
    VanSu.CanChi.nam(2026) -> 'Bính Ngọ'
 
-2. Can Chi tháng âm lịch  
+3. Can Chi tháng âm lịch
+    
    VanSu.CanChi.thang(1, 2026) -> 'Canh Dần'
 
-3. Can Chi ngày dương lịch  
+5. Can Chi ngày dương lịch
+   
    VanSu.CanChi.ngay(8, 2, 2026) -> 'Qúy Sửu'
 
 ---
 
-V. Ngày tốt – xấu (TotXau)
+## V. Ngày tốt – xấu (TotXau)
 1. Các hàm kiểm tra ngày kỵ (theo Âm lịch)
 
    VanSu.TotXau.isTamNuong(dl, ml, yl)  
@@ -92,7 +102,7 @@ V. Ngày tốt – xấu (TotXau)
 
 ---
 
-VI. Giờ Hoàng Đạo
+## VI. Giờ Hoàng Đạo
 
 1. Danh sách giờ Hoàng Đạo trong ngày
 
@@ -106,7 +116,7 @@ VI. Giờ Hoàng Đạo
 
 ---
 
-VII. Tiết Khí (TietKhi)
+## VII. Tiết Khí (TietKhi)
 
 1. Xác định một ngày THUỘC tiết khí nào
 
@@ -125,7 +135,7 @@ VII. Tiết Khí (TietKhi)
 
 ---
 
-VIII. Thông tin Vạn Sự tổng hợp
+## VIII. Thông tin Vạn Sự tổng hợp
 
 1. Theo Dương lịch
 
@@ -136,6 +146,7 @@ VIII. Thông tin Vạn Sự tổng hợp
    VanSu.getInfo(dl, ml, yl, 'l')
 
 3. Nội dung trả về bao gồm các thuộc tính:
+   
    - Thứ trong tuần  
    - Ngày Âm lịch  
    - Can Chi ngày, tháng, năm  
@@ -146,20 +157,23 @@ VIII. Thông tin Vạn Sự tổng hợp
 
 ---
 
-IX. Ghi chú
+## IX. Ghi chú
 
 1. Tham số SorL
+   
    - 's': Dương lịch
    - 'l': Âm lịch
 
-2. Múi giờ mặc định
+3. Múi giờ mặc định
+   
    - UTC +7 (Việt Nam)
 
-X. Tác giả
+## X. Tác giả
 
  Email: hoangdtung2021@gmail.com
 
 ========= English =========
+
 ## I. Importing Libraries
 from main import Date, VanSu
 
