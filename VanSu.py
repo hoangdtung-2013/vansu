@@ -28,35 +28,35 @@ import math
 
 class Date:
     @staticmethod
-    def isleap(y):
+    def isLeap(y):
         return y % 400 == 0 or (y % 4 == 0 and y % 100 != 0)
     
     @staticmethod
-    def daymonth(m, y):
+    def dayMonth(m, y):
         if m in (1, 3, 5, 7, 8, 10, 12):
             return 31
         if m in (4, 6, 9, 11):
             return 30
         if m == 2:
-            return 29 if Date.isleap(y) else 28
+            return 29 if Date.isLeap(y) else 28
         return 0
     
     @staticmethod
-    def dayofyear(d, m, y):
+    def dayYear(d, m, y):
         s = 0
         for i in range(1, m):
-            s += Date.daymonth(i, y)
+            s += Date.dayMonth(i, y)
         return s + d
     
     @staticmethod
-    def date_to_jdn(d, m, y):
+    def convertDate2jdn(d, m, y):
         a = (14 - m) // 12
         y2 = y + 4800 - a
         m2 = m + 12 * a - 3
         return d + (153 * m2 + 2) // 5 + 365 * y2 + y2 // 4 - y2 // 100 + y2 // 400 - 32045
     
     @staticmethod
-    def jdn_to_date(j):
+    def convertjdn2Date(j):
         a = j + 32044
         b = (4 * a + 3) // 146097
         c = a - (146097 * b) // 4
@@ -69,23 +69,23 @@ class Date:
         return day, month, year
 
     @staticmethod
-    def add_days(d, m, y, n):
-        j = Date.date_to_jdn(d, m, y)
-        return Date.jdn_to_date(j + n)
+    def addDays(d, m, y, n):
+        j = Date.convertDate2jdn(d, m, y)
+        return Date.convertjdn2Date(j + n)
     
     @staticmethod
-    def subtract_days(d, m, y, n):
-        j = Date.date_to_jdn(d, m, y)
-        return Date.jdn_to_date(j - n)
+    def subtDays(d, m, y, n):
+        j = Date.convertDate2jdn(d, m, y)
+        return Date.convertjdn2Date(j - n)
     
     @staticmethod
-    def date_different(d1, m1, y1, d2, m2, y2):
-        j1 = Date.date_to_jdn(d1, m1, y1)
-        j2 = Date.date_to_jdn(d2, m2, y2)
+    def dateDiff(d1, m1, y1, d2, m2, y2):
+        j1 = Date.convertDate2jdn(d1, m1, y1)
+        j2 = Date.convertDate2jdn(d2, m2, y2)
         return abs(j2 - j1)
     
     @staticmethod
-    def exact_age(bd, bm, by):
+    def exactAge(bd, bm, by):
         today = datetime.today()
         cd = today.day
         cm = today.month
@@ -96,7 +96,7 @@ class Date:
             if cm == 0:
                 cm = 12
                 cy -= 1
-            cd += Date.daymonth(cm, cy)
+            cd += Date.dayMonth(cm, cy)
         d = cd - bd
 
         if cm < bm:
@@ -108,7 +108,7 @@ class Date:
         return y, m, d
     
     @staticmethod
-    def dayweek(q, m, y):
+    def dayWeek(q, m, y):
         a = ['Thứ bảy','Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu']
         if m == 1:
             m = 13
@@ -164,7 +164,7 @@ class VanSu:
         
         @staticmethod
         def getLunarMonth11(yy, timeZone=7.0):
-            off = Date.date_to_jdn(31, 12, yy) - 2415021
+            off = Date.convertDate2jdn(31, 12, yy) - 2415021
             k = math.floor(off / 29.530588853)
             nm = VanSu.SolarAndLunar.getNewMoonDay(k, timeZone)
             sunLong = VanSu.SolarAndLunar.getSunLongitude(nm, timeZone)
@@ -199,7 +199,7 @@ class VanSu:
         
         @staticmethod
         def convertSolar2Lunar(dd, mm, yy, timeZone=7.0):
-            dayNumber = Date.date_to_jdn(dd, mm, yy)
+            dayNumber = Date.convertDate2jdn(dd, mm, yy)
             k = math.floor((dayNumber - 2415021.076998695) / 29.530588853)
             monthStart = VanSu.SolarAndLunar.getNewMoonDay(k + 1, timeZone)
             if monthStart > dayNumber:
@@ -250,7 +250,7 @@ class VanSu:
                     off += 1
             k = int(0.5 + (a11 - 2415021.076998695) / 29.530588853)
             monthStart = VanSu.SolarAndLunar.getNewMoonDay(k + off, timeZone)
-            return Date.jdn_to_date(monthStart + lunarDay - 1)
+            return Date.convertjdn2Date(monthStart + lunarDay - 1)
 
     class CanChi:
         @staticmethod
@@ -283,7 +283,7 @@ class VanSu:
         def ngay(d,m,y):
             can = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Qúy']
             chi = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tị', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi']
-            jdn = Date.date_to_jdn(d, m, y)
+            jdn = Date.convertDate2jdn(d, m, y)
             c1 = can[(jdn + 9) % 10]
             c2 = chi[(jdn + 1) % 12]
             return c1 + ' ' + c2
@@ -455,7 +455,7 @@ class VanSu:
         
         @staticmethod
         def jdate(d, m, y, h, mn, s, timeZone = 7.0):
-            jdn = Date.date_to_jdn(d, m, y)
+            jdn = Date.convertDate2jdn(d, m, y)
             return (jdn + (h - 12)/24 + mn/1440 + s/86400) - timeZone/24
         
         @staticmethod
@@ -554,7 +554,7 @@ class VanSu:
             jdn = int(jdUtc + 0.5)
             fraction = (jdUtc + 0.5) - jdn
             
-            d, m, y = Date.jdn_to_date(jdn)
+            d, m, y = Date.convertjdn2Date(jdn)
             
             hours = fraction * 24
             h = int(hours)
@@ -592,7 +592,7 @@ class VanSu:
     @staticmethod
     def getInfo(d, m, y, SorL):
         if SorL == 's':
-            thu = Date.dayweek(d, m, y)
+            thu = Date.dayWeek(d, m, y)
             dl, ml, yl, isLeap = VanSu.SolarAndLunar.convertSolar2Lunar(d, m, y)
             ccng = VanSu.CanChi.ngay(d, m, y); canng = ccng.split()[1]
             ccth = VanSu.CanChi.thang(ml, yl)
@@ -633,7 +633,7 @@ class VanSu:
             dl, ml, yl = d, m, y
             isLeap = 1 if yl % 19 in [0, 3, 6, 9, 11, 14, 17] else 0
             ds, ms, ys = VanSu.SolarAndLunar.convertLunar2Solar(dl, ml, yl, isLeap)
-            thu = Date.dayweek(ds, ms, ys)
+            thu = Date.dayWeek(ds, ms, ys)
             ccng = VanSu.CanChi.ngay(ds, ms, ys); ccth = VanSu.CanChi.thang(ml, yl); ccnm = VanSu.CanChi.nam(yl); canng = ccng.split()[1]
             hodhad = VanSu.TotXau.getHoangHacDao(canng, ml)
             tamnuong, nguyetpha, satchu, thotu, vangvong, nguyetky, daibai = VanSu.TotXau.isTamNuong(dl,ml,yl), VanSu.TotXau.isNguyetPha(dl,ml,yl), VanSu.TotXau.isSatChu(dl,ml,yl), VanSu.TotXau.isThoTu(dl,ml,yl), VanSu.TotXau.isVangVong(dl,ml,yl), VanSu.TotXau.isNguyetKy(dl,ml,yl), VanSu.TotXau.isDaiBai(dl,ml,yl)
@@ -661,8 +661,8 @@ class VanSu:
                          f'{" ".join(hodhad)}\n'
                          f'{a}\n'
                          f'- Giờ tốt: {", ".join(gd)}\n')
-            td = VanSu.TietKhi.getTermDate(tiet, y)
-            if td and td.day == d and td.month == m:
+            td = VanSu.TietKhi.getTermDate(tiet, ys)
+            if td and td.day == ds and td.month == ms:
                 return inf + f'- BẮT ĐẦU TIẾT: {tiet}.'
             else:
                 return inf + f'- Thuộc tiết {tiet}.'
