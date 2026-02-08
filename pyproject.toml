@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vncalendar"
+version = "0.1.0"
+description = "Thư viện Python tính lịch Âm – Dương, Can Chi và ngày tốt xấu theo lịch Việt Nam"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    {name = "Hoang Duc Tung", email = "hoangdtung2021@gmail.com"}
+]
+
+license = {text = "MIT"}
+keywords = [
+    "vietnamese-calendar",
+    "chinese-calendar",
+    "lunar-calendar",
+    "solar-calendar",
+    "can-chi",
+    "vn-calendar",
+    "am-duong"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[project.urls]
+Homepage = "https://github.com/hoangdtung-2013/vncalendar"
+Repository = "https://github.com/hoangdtung-2013/vncalendar"
+Issues = "https://github.com/hoangdtung-2013/vncalendar/issues"
+
+[tool.setuptools]
+packages = ["vncalendar"]
