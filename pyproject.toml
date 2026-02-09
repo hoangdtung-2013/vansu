@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vncalendar"
-version = "1.0.0"
+version = "1.0.1"
 description = "Thư viện Python tính lịch Âm – Dương, Can Chi và ngày tốt xấu theo lịch Việt Nam"
 readme = "README.md"
 requires-python = ">=3.7"
