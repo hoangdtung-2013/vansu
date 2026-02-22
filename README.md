@@ -18,14 +18,14 @@ The library is built based on:
 
 - Leap year detection
   ```python
-  from main import Date
+  from vncalendar import Date
   print(Date.isLeap(2024))           # True
   ```
 - Number of days in a month / day index in a year
   ```python
   print(Date.dayMonth(2, 2026))      # 28
-  print(Date.dayYear(6, 2, 2026))    # 37  →  06/02/2026 is the 37th day of 2026
-  print(Date.weekYear(6, 2, 2026))   # ISO week number
+  print(Date.dayYear(6, 2, 2026))    # 37 → 06/02/2026 is the 37th day of 2026
+  print(Date.weekYear(6, 2, 2026))   # 6 → 06/02/2026 belonging to the 6th week of 2026
   ```
 - Date addition and subtraction
   ```python
@@ -35,11 +35,11 @@ The library is built based on:
   ```
 - Day-of-week calculation
   ```python
-  print(Date.dayWeek(13, 4, 2025))   # Chủ nhật
+  print(Date.dayWeek(13, 4, 2025))   # Chủ nhật (meaning Sunday)
   ```
 - Exact age calculation
   ```python
-  print(Date.exactAge(3, 6, 1936))   # (89, 8, 6) → 89 years, 8 months, 6 days
+  print(Date.exactAge(3, 6, 1936))   # (89, 8, 19, 10, 28, 17) → 89 years, 8 months, 19 days, 10 hours, 28 minutes, 17 seconds.
   ```
 
 ---
@@ -48,13 +48,13 @@ The library is built based on:
 
 - Gregorian → Lunar
   ```python
-  from main import SolarAndLunar
+  from vncalendar import SolarAndLunar
   print(SolarAndLunar.convertSolar2Lunar(20, 12, 2025))  # (1, 11, 2025, 0)
   ```
 - Lunar → Gregorian
   ```python
   print(SolarAndLunar.convertLunar2Solar(1, 11, 2025, 1))  # (20, 12, 2025)
-  # The 4th argument: 1 if the lunar month is a leap month, otherwise 0.
+  # (!) The 4th argument: 1 if the lunar month is a leap month, otherwise 0.
   ```
 
 ---
@@ -63,7 +63,7 @@ The library is built based on:
 
 - Year Can Chi
   ```python
-  from main import CanChi
+  from vncalendar import CanChi
   print(CanChi.nam(2026))            # Bính Ngọ
   ```
 - Month Can Chi
@@ -81,7 +81,7 @@ The library is built based on:
 
 - Hoàng Đạo / Hắc Đạo determination
   ```python
-  from main import TotXau
+  from vncalendar import TotXau
   print(TotXau.getHoangHacDao('Tị', 12))  # ('Ngọc Đường', 'Hoàng Đạo')
   # Arg 1: Earthly Branch of the day → CanChi.ngay(d, m, y).split()[1]
   # Arg 2: Lunar month of the date
@@ -111,10 +111,6 @@ The library is built based on:
   print(TotXau.quyHoi('Sửu'))   # (1, 3)   →  1 a.m. – 3 a.m.
   print(TotXau.gioAm(2))        # 'Sửu'    →  2 a.m. belongs to Sửu hour
   ```
-- Cửu Diệu (Nine-Star) for a person
-  ```python
-  print(TotXau.getCuuDieu(1990, 'm'))  # Nine-Star name for a male born in lunar year 1990
-  ```
 
 ---
 
@@ -122,7 +118,7 @@ The library is built based on:
 
 - Solar term of a given date (Gregorian)
   ```python
-  from main import TietKhi
+  from vncalendar import TietKhi
   print(TietKhi.getTerm(7, 5, 2026))             # Lập Hạ
   ```
 - Exact start time of a solar term
@@ -145,9 +141,10 @@ The library is built based on:
 
 - Full almanac summary for a given date
   ```python
-  from main import VanSu
+  from vncalendar import VanSu
   print(VanSu.getInfo(7, 5, 2026, 's'))
-  # 7/5/2026    THỨ NĂM    Ngày 21/3/2026 ÂL
+
+   # 7/5/2026    THỨ NĂM    Ngày 21/3/2026 ÂL
   # Ngày Tân Tị - Tháng Nhâm Thìn - Năm Bính Ngọ
   # Hành Kim - Sao Tỉnh
   # Minh Đường Hoàng Đạo
@@ -157,15 +154,6 @@ The library is built based on:
   ```
   Use `'s'` for Gregorian input, `'l'` for Lunar input.
 
-- 12 Trực destiny reading based on lunar birth year
-  ```python
-  print(VanSu.getPredict12Truc(1990))   # Four-line destiny poem in Vietnamese
-  ```
-- Cửu Diệu prediction text
-  ```python
-  print(VanSu.getPredictCuuDieu(1990, 'm'))  # Prediction string in Vietnamese
-  ```
-
 ---
 
 ### 2.7. Person (`Person`)
@@ -173,22 +161,21 @@ The library is built based on:
 Represents an individual and provides personal almanac readings based on their birth date.
 
 ```python
-from main import Person
+from vncalendar import Person
 
 p = Person(15, 1, 1990, 'm')
-# birth_day, birth_month, birth_year (Gregorian), gender ('m' / 'f')
+# bday, bmon, byr (Gregorian), gender ('m' / 'f')
 ```
 
 | Method | Description |
 |---|---|
 | `p.truc12()` | 12 Trực destiny poem based on lunar birth year |
 | `p.cuuDieu()` | Cửu Diệu prediction based on lunar birth year and gender |
-| `p.age()` | Exact age as `(years, months, days, hours, minutes, seconds)` |
 
 ```python
-print(p.truc12())
-print(p.cuuDieu())
-print(p.age())     # (36, 1, 6, ...)
+print(p.getPredict12Truc())
+print(p.getPredictCuuDieu())
+
 ```
 
 ---
@@ -254,23 +241,20 @@ main.py
 │   ├── getSao
 │   ├── getHanh
 │   ├── get28_Hanh
-│   ├── getInfo
-│   ├── getPredict12Truc
-│   └── getPredictCuuDieu
+│   └── getInfo
 │
 └── Person
     ├── __init__(bday, bmon, byr, gen)
-    ├── truc12
-    ├── cuuDieu
-    └── age
+    ├── getPređict12Truc
+    └── getPredictCuuDieu
 ```
 
 ---
 
 ## IV. Accuracy and Scope
 
-- Default time zone: UTC+7 (Vietnam)
-- Algorithms are based on astronomical calculations
+- Default time zone: UTC +7 (Vietnam)
+- Algorithms are based on astronomical calculations.
 - Suitable for:
   - Calendar applications
   - Vạn Sự lookup tools
@@ -296,6 +280,6 @@ main.py
 
 ## VII. Author
 
-Full name: Hoàng Đức Tùng  
-Email: hoangdtung2021@gmail.com  
+Full name: Hoàng Đức Tùng
+Email: hoangdtung2021@gmail.com
 Facebook: https://www.facebook.com/hoangductung.keocon/
